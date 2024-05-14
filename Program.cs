@@ -37,9 +37,11 @@ builder.Services.AddHealthChecks().AddCheck("apiInformation", () => HealthCheckR
 
 builder.Services.AddExceptionHandler<CustomExceptionMiddleware>().AddProblemDetails();
 
+builder.Services.AddLogging();
+
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
