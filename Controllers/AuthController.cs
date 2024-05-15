@@ -1,14 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MO.Result;
 using System.Net;
-using TS.Bootcamp.ECommerce.WebAPI.Controllers.Abstract;
 using TS.Bootcamp.ECommerce.WebAPI.Dtos;
+using TS.Bootcamp.ECommerce.WebAPI.Filters;
 using TS.Bootcamp.ECommerce.WebAPI.Models;
 using TS.Bootcamp.ECommerce.WebAPI.Utilities;
 
 namespace TS.Bootcamp.ECommerce.WebAPI.Controllers
 {
-    public class AuthController : BaseApiController
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    [CustomLog]
+    public class AuthController : ControllerBase
     {
         [HttpPost]
         public IActionResult Register(AppUserRegisterDto request)

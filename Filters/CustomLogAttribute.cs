@@ -85,13 +85,14 @@ namespace TS.Bootcamp.ECommerce.WebAPI.Filters
                     writer.WriteLine($"TraceId: {context.HttpContext.TraceIdentifier}");
                     writer.WriteLine($"Path: {context.HttpContext.Request.Path}");
                     writer.WriteLine($"Method: {context.HttpContext.Request.Method}");
-                    writer.WriteLine($"Body: {bodyString}");
+                    writer.WriteLine($"StatusCode: {context.HttpContext.Response.StatusCode}");
+                    //writer.WriteLine($"Body: {bodyString}");
                     writer.WriteLine("---------------------------------------------------------------------------");
                 }
             }
             catch (Exception e)
             {
-                throw new Exception(Result<string>.Fail(e.Message).ToString());
+                throw new Exception(e.Message);
             }
         }
     }
