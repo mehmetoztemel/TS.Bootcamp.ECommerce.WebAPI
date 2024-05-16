@@ -6,16 +6,11 @@ namespace TS.Bootcamp.ECommerce.WebAPI.Filters
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            bool keyCheck = context.HttpContext.Request.Headers.Keys.Any(x => x == "apiKey");
-            if (keyCheck)
+            var keyCheck = context.HttpContext.Request.Headers.TryGetValue("apiKey", out var secretKey);
+            if (!(keyCheck && secretKey == "12345"))
             {
-                string value = context.HttpContext.Request.Headers["apiKey"]!;
-                if (value != "12345")
-                {
-                    throw new Exception("U dont have permission");
-                }
+                throw new Exception("U dont have permission");
             }
-            else throw new Exception("U dont have permission");
         }
     }
 }
