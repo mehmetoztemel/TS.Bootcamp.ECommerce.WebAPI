@@ -75,7 +75,6 @@ namespace TS.Bootcamp.ECommerce.WebAPI.Filters
                     bodyString = objectResult.Value!.ToString() ?? "";
                 }
 
-                //File.AppentText StreamWriter ile aynı işi yapıyor
                 using (StreamWriter writer = File.AppendText(Path.Combine(Folder_Name, FileName)))
                 {
                     writer.Write("Response ");
@@ -86,7 +85,7 @@ namespace TS.Bootcamp.ECommerce.WebAPI.Filters
                     writer.WriteLine($"Path: {context.HttpContext.Request.Path}");
                     writer.WriteLine($"Method: {context.HttpContext.Request.Method}");
                     writer.WriteLine($"StatusCode: {context.HttpContext.Response.StatusCode}");
-                    //writer.WriteLine($"Body: {bodyString}");
+                    writer.WriteLine($"Body: {bodyString}");
                     writer.WriteLine("---------------------------------------------------------------------------");
                 }
             }
