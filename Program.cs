@@ -1,6 +1,7 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -8,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using MO.Result;
 using System.Net;
 using System.Text;
+using TS.Bootcamp.ECommerce.WebAPI.Context;
 using TS.Bootcamp.ECommerce.WebAPI.Dtos;
 using TS.Bootcamp.ECommerce.WebAPI.Middlewares;
 using TS.Bootcamp.ECommerce.WebAPI.Models;
@@ -77,10 +79,18 @@ builder.Services.AddRateLimiter(options =>
 builder.Services.AddHealthChecks().AddCheck("apiInformation", () => HealthCheckResult.Healthy());
 #endregion
 
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
+});
+
+
 #region JWT
 
 // app.settingste belirtilen sectionda yer alan ayarlarý burada ilgili classa program derlendiðinde atama yapýyoruz.
 builder.Services.Configure<Jwt>(builder.Configuration.GetSection("JWT"));
+
 builder.Services.AddScoped<JwtProvider>();
 var provider = builder.Services.BuildServiceProvider();
 var jwtOptions = provider.GetRequiredService<IOptionsMonitor<Jwt>>();
